@@ -14,12 +14,9 @@ module SessionsHelper
 	end
 
 	def log_out
-		forget current_user
-	end
-
-	def forget user
-		user.forget
 		cookies.delete :user_id
+		session.delete :user_id
+		@current_user = nil
 	end
 
 	def redirect_back_or default

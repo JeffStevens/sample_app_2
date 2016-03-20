@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find params[:id]
+		@entries = User.entries.paginate page: params[:page]
 	end
 
 	def create
