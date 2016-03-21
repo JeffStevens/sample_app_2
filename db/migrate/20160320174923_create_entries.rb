@@ -6,5 +6,6 @@ class CreateEntries < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :entries, [:user_id, :created_at]
   end
 end

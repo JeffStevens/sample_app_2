@@ -1,0 +1,31 @@
+<% provide :title, "New comment" %>
+<div class="row">
+	<aside class="col-md-4">
+		<%= gravatar_for @entry.user, size: 50 %>
+		<h4><%= link_to @entry.user.name, @entry.user %></h4>
+		<% if logged_in? %>
+			<% if (current_user.following? @entry.user) || (current_user? @entry.user) %>
+				<%= form_for @comment, html: { multipart: true } do |f| %>
+					<div class="field">
+						<%= f.text_area :content, placeholder: "Leave a comment" %>
+						<%= f.hidden_field :entry_id, value: @entry.id %>
+					</div>
+					<%= f.submit "Post", class: "btn btn-primary" %>
+				<% end %>
+			<% end %>
+		<% end %>
+	</aside>
+	<div class="col-md-8">
+		<% @comments.each do |comment| %>
+			<%= gravatar_for comment.user, size: 40 %>
+			<%= link_to comment.user.name, comment.user %>
+			<p><%= comment.content %></p>
+			<% if logged_in? %>
+				<h5>
+					<%= link_to "Delete", comment, method: :delete,
+										data: { confirm: "You sure?" } %>
+				</h5>
+			<% end %>
+		<% end %>
+	</div>	
+</div>
